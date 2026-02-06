@@ -16,7 +16,6 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import InputForm from "@/components/form/input-form";
 import { Spinner } from "@/components/ui/spinner";
 import { Alert, AlertTitle } from "@/components/ui/alert";
-import { auth } from "@/lib/auth";
 import { signIn } from "@/lib/auth/auth-client";
 import GoogleIcon from "@/components/icon/google-icon";
 
