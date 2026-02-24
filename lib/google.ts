@@ -1,13 +1,5 @@
-import nodemailer from "nodemailer";
-
-// Configure Google SMTP transporter
-// export const googleSmtpTransporter = nodemailer.createTransport({
-//   service: "gmail",
-//   auth: {
-//     user: process.env.GOOGLE_SMTP_USER,
-//     pass: process.env.GOOGLE_SMTP_PASS,
-//   },
-// });
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Send an email using Google SMTP
@@ -24,11 +16,13 @@ export async function sendEmail({
   subject: string;
   html: string;
 }) {
-  // return googleSmtpTransporter.sendMail({
-  //   from: process.env.GOOGLE_SMTP_USER,
-  //   to,
-  //   subject,
-  //   html,
-  // });
+  await resend.emails.send({
+    from:
+      (process.env.NEXT_PUBLIC_VERIFICATION_EMAIL_FROM as string) ||
+      "onboarding!@resend.dev",
+    to,
+    subject,
+    html,
+  });
   return;
 }

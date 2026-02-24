@@ -34,6 +34,9 @@ import { bookAppointmentSchema } from "@/schema/appointment";
 import { useToast } from "@/hooks/use-toast";
 import { Spinner } from "@/components/ui/spinner";
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import { addPaypalScript, PRICES } from "@/lib/paypal";
+import { PayPalButton } from "react-paypal-button-v2";
 
 const appointmentTypeOptions = [
   { value: "VIDEO", label: "Video" },
@@ -63,6 +66,7 @@ export function BookAppointmentModal({
 }: BookAppointmentModalProps) {
   const { toast } = useToast();
   const bookAppointment = useBookAppointment();
+  // const [scriptLoaded, setScriptLoaded] = useState(false);
 
   const form = useForm<z.infer<typeof bookAppointmentSchema>>({
     resolver: zodResolver(bookAppointmentSchema),
@@ -93,6 +97,10 @@ export function BookAppointmentModal({
       });
     }
   }
+
+  // useEffect(() => {
+  //   addPaypalScript(setScriptLoaded);
+  // }, [isOpen]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -158,6 +166,12 @@ export function BookAppointmentModal({
               )}
             />
 
+            {/* {scriptLoaded ? (
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col bg-black/50 rounded-xl p-5 mb-1">
+                  <span>Appoitment cost (USD)</span>
+                  <p className="text-xl font-bold">${PRICES.APPOINTMENT}</p>
+                </div> */}
             <DialogFooter>
               <Button
                 type="submit"
@@ -170,6 +184,21 @@ export function BookAppointmentModal({
                 Confirm Booking
               </Button>
             </DialogFooter>
+            {/* <PayPalButton
+                  amount={PRICES.APPOINTMENT}
+                  onSuccess={(details, data) => {
+                    console.log(details, data);
+                    form.handleSubmit(onSubmit)();
+                  }}
+                /> */}
+            {/* </div>
+            ) : (
+              <div className="flex items-center justify-center py-4">
+                <span className="text-sm opacity-60 animate-impulse">
+                  Loading...
+                </span>
+              </div>
+            )} */}
           </form>
         </Form>
       </DialogContent>
